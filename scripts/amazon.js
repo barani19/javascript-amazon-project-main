@@ -30,8 +30,10 @@ import {products} from '../data/products.js'
 // },
 // ] 
 
-let productHtml = ''
 
+
+let productHtml = ''
+// create html using js for items
 products.forEach((product)=>{
   productHtml +=`
   <div class="product-container">
@@ -85,37 +87,47 @@ products.forEach((product)=>{
   `
 })
 
+// create html using js for items
 document.querySelector('.js-product-grid').innerHTML = productHtml
 
-document.querySelectorAll('.js-add-cart').forEach((button)=>{
-   button.addEventListener('click',()=>{
-    let productid  = button.dataset.productId;
-    console.log(button.dataset)
-    let curr ;
-    cart.forEach((item)=>{
-      if(item.productId === productid){
-        curr = item
-      }
+// add product to cart
+function addtocart(productid){
+  let curr ;
+  cart.forEach((item)=>{
+    if(item.productId === productid){
+      curr = item
+    }
+  })
+  if(curr){
+    curr.quantity+=1
+  }
+  else{
+   cart.push({
+     productId: productid,
+     quantity: 1
     })
-    if(curr){
-      curr.quantity+=1
-    }
-    else{
-     cart.push({
-       productId: productid,
-       quantity: 1
-      })
-    }
-    
-    console.log(cart)
-    let cartQuantity = 0;
+  }
+}
+
+// update product item
+function updatecartval(){
+  let cartQuantity = 0;
 
     cart.forEach((item)=>{
         cartQuantity += item.quantity;
     })
   
     document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
-     
+}
+
+// make button responsive
+document.querySelectorAll('.js-add-cart').forEach((button)=>{
+   button.addEventListener('click',()=>{
+    let productid  = button.dataset.productId;
+    console.log(button.dataset)
+    addtocart();
+    console.log(cart)
+    updatecartval();
    })
 })
 
