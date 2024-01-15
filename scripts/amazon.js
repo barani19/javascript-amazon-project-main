@@ -1,4 +1,6 @@
-console.log('hello')
+import {cart} from '../data/cart.js';
+import {products} from '../data/products.js'
+
 // const products = [{
 //     image: 'images/products/athletic-cotton-socks-6-pairs.jpg',
 //     name : 'Black and Gray Athletic Cotton Socks - 6 Pairs',
@@ -51,7 +53,7 @@ products.forEach((product)=>{
           </div>
 
           <div class="product-price">
-            $${(product.pricecents/100).toFixed(2)}
+            $${(product.priceCents/100).toFixed(2)}
           </div>
 
           <div class="product-quantity-container">
@@ -76,7 +78,7 @@ products.forEach((product)=>{
             Added
           </div>
 
-          <button class="add-to-cart-button button-primary">
+          <button class="add-to-cart-button button-primary js-add-cart "data-product-id="${product.id}">
             Add to Cart
           </button>
         </div>
@@ -84,3 +86,37 @@ products.forEach((product)=>{
 })
 
 document.querySelector('.js-product-grid').innerHTML = productHtml
+
+document.querySelectorAll('.js-add-cart').forEach((button)=>{
+   button.addEventListener('click',()=>{
+    let productid  = button.dataset.productId;
+    console.log(button.dataset)
+    let curr ;
+    cart.forEach((item)=>{
+      if(item.productId === productid){
+        curr = item
+      }
+    })
+    if(curr){
+      curr.quantity+=1
+    }
+    else{
+     cart.push({
+       productId: productid,
+       quantity: 1
+      })
+    }
+    
+    console.log(cart)
+    let cartQuantity = 0;
+
+    cart.forEach((item)=>{
+        cartQuantity += item.quantity;
+    })
+  
+    document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
+     
+   })
+})
+
+
