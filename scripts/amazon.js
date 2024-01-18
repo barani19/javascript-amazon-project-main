@@ -109,7 +109,9 @@ function addtocart(productid){
     storagecart();
   }
 }
-
+export function cartquantity(cartQuantity){
+  document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
+}
 // update product item
 function updatecartval(){
   let cartQuantity = 0;
@@ -118,7 +120,7 @@ function updatecartval(){
         cartQuantity += item.quantity;
     })
     storagecart();
-    document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
+   cartquantity(cartQuantity);
 }
 
 // make button responsive
