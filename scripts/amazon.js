@@ -1,6 +1,6 @@
-import {cart} from '../data/cart.js';
+import {cart,storagecart} from '../data/cart.js';
 import {products} from '../data/products.js'
-
+import { calucalteprice } from './utils/utils.js';
 // const products = [{
 //     image: 'images/products/athletic-cotton-socks-6-pairs.jpg',
 //     name : 'Black and Gray Athletic Cotton Socks - 6 Pairs',
@@ -55,7 +55,7 @@ products.forEach((product)=>{
           </div>
 
           <div class="product-price">
-            $${(product.priceCents/100).toFixed(2)}
+            $${calucalteprice(product.priceCents)}
           </div>
 
           <div class="product-quantity-container">
@@ -106,6 +106,7 @@ function addtocart(productid){
      productId: productid,
      quantity: 1
     })
+    storagecart();
   }
 }
 
@@ -116,7 +117,7 @@ function updatecartval(){
     cart.forEach((item)=>{
         cartQuantity += item.quantity;
     })
-  
+    storagecart();
     document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
 }
 
@@ -125,7 +126,7 @@ document.querySelectorAll('.js-add-cart').forEach((button)=>{
    button.addEventListener('click',()=>{
     let productid  = button.dataset.productId;
     console.log(button.dataset)
-    addtocart();
+    addtocart(productid);
     console.log(cart)
     updatecartval();
    })
